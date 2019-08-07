@@ -7,7 +7,7 @@ export default class App extends Component {
     return (
       <div>
         <h1>Wirecase Authentication Token Demo</h1>
-        <AuthenticationTokenComponent json={testData} />
+        <AuthenticationTokenComponent />
         <p>Following Input using wirecase-authentication-token</p>
       </div>
     );
