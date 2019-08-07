@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import AuthenticationTokenComponent from 'wirecase-authentication-token';
 
 export default class App extends Component {
+  static propTypes = {};
+  static defaultProps = {};
+
   render() {
     return (
       <div>

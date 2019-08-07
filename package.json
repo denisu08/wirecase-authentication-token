@@ -24,7 +24,10 @@
   "peerDependencies": {
     "prop-types": "^15.5.4",
     "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react-dom": "^15.0.0 || ^16.0.0",
+    "semantic-ui-css": "^2.4.0",
+    "semantic-ui-react": "^0.85",
+    "semantic-ui-react-context-menu": "^1.0.0"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
@@ -59,5 +62,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "semantic-ui-css": "^2.4.0",
+    "semantic-ui-react": "^0.85",
+    "semantic-ui-react-context-menu": "^1.0.0"
+  }
 }
