@@ -50,7 +50,7 @@ class Example extends Component {
 
 # JSFiddle Example
 
-[http://jsfiddle.net/denisu08/61fwqcg5/](http://jsfiddle.net/denisu08/xxxxxxx/)
+[http://jsfiddle.net/denisu08/xxxxxxx/](http://jsfiddle.net/denisu08/xxxxxxx/)
 
 # What
 
