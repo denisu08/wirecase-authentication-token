@@ -10,12 +10,14 @@ const ErrorWrapper = styled.div`
 export default class AuthenticationTokenComponent extends Component {
   static defaultProps = {
     label: 'Token',
+    challengeLabel: 'Challenge',
     regexValidation: '^[0-9]*$',
     listTypeExtra: ['softToken', 'hardToken'],
   };
   static propTypes = {
     inline: PropTypes.bool,
     label: PropTypes.string,
+    challengeLabel: PropTypes.string,
     placeholder: PropTypes.string,
     maxLength: PropTypes.number,
     regexValidation: PropTypes.string,
@@ -77,6 +79,7 @@ export default class AuthenticationTokenComponent extends Component {
   render() {
     const {
       label,
+      challengeLabel,
       placeholder,
       inline,
       maxLength,
@@ -93,7 +96,7 @@ export default class AuthenticationTokenComponent extends Component {
           className={isError ? 'animated shake faster' : null}
           label={`${label} ${
             listTypeExtra.includes(authForm.authType) && authForm.challenge
-              ? `(${authForm.challenge}):`
+              ? ` (${challengeLabel} ${authForm.challenge}):`
               : ':'
           }`}
           type={type}
