@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import AuthenticationTokenComponent from 'wirecase-authentication-token';
+import 'semantic-ui-css/semantic.min.css';
 
 export default class App extends Component {
   static propTypes = {};
