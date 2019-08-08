@@ -10,7 +10,12 @@
     "react-dom": "^16.4.1",
     "react-gist": "^1.2.1",
     "wirecase-authentication-token": "file:..",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^1.1.4",
+    "semantic-ui-css": "^2.4.0",
+    "semantic-ui-react": "^0.85",
+    "semantic-ui-react-context-menu": "^1.0.0",
+    "lodash": "4.17.10",
+    "styled-components": "3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

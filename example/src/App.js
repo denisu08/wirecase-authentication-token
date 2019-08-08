@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import AuthenticationTokenComponent from 'wirecase-authentication-token';
 import 'semantic-ui-css/semantic.min.css';
+import './index.css';
 
 export default class App extends Component {
   static propTypes = {};
@@ -9,10 +10,20 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="mainPanel">
         <h1>Wirecase Authentication Token Demo</h1>
-        <AuthenticationTokenComponent />
         <p>Following Input using wirecase-authentication-token</p>
+        <AuthenticationTokenComponent
+          label="Auth Token"
+          placeholder="input token here..."
+          maxLength={6}
+          value={{
+            authType: 'softToken',
+            challenge: `${Math.ceil(Math.random() * 999999)}`,
+          }}
+          // isError
+          // errorMessage="Sample Error"
+        />
       </div>
     );
   }

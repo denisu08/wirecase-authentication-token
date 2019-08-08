@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
-import { Input } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Form, Icon } from 'semantic-ui-react';
+import * as _ from 'lodash';
 
+const ErrorWrapper = styled.div`
+  color: ${props => props.theme.errorColor};
+`;
 export default class AuthenticationTokenComponent extends Component {
-  static propTypes = {};
+  static defaultProps = {
+    label: 'Token',
+    regexValidation: '^[0-9]*$',
+    listTypeExtra: ['softToken', 'hardToken'],
+  };
+  static propTypes = {
+    inline: PropTypes.bool,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    maxLength: PropTypes.number,
+    regexValidation: PropTypes.string,
+    listTypeExtra: PropTypes.array,
+    onValueChange: PropTypes.func,
+    isError: PropTypes.bool,
+    errorMessage: PropTypes.string,
+  };
 
   static styles = {
     td: {
@@ -19,13 +40,82 @@ export default class AuthenticationTokenComponent extends Component {
       fontWeight: 'bold',
     },
   };
-  static defaultProps = {};
+
+  constructor(props) {
+    super();
+    this.state = {
+      authForm: {
+        authType: _.get(props, 'value.authType' || ''),
+        challenge: _.get(props, 'value.challenge' || ''),
+        token: _.get(props, 'value.token' || ''),
+      },
+      type: 'password',
+    };
+  }
+
+  handleInputChange = (e, { value }) => {
+    const { onValueChange, regexValidation } = this.props;
+    if (value.match(regexValidation) != null) {
+      const newAuthForm = {
+        authForm: Object.assign(this.state.authForm, { token: value }),
+      };
+      if (onValueChange) {
+        onValueChange(newAuthForm);
+      }
+      this.setState(newAuthForm);
+    }
+  };
+
+  showHidePassword(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input',
+    });
+  }
 
   render() {
+    const {
+      label,
+      placeholder,
+      inline,
+      maxLength,
+      listTypeExtra,
+      isError,
+      errorMessage,
+    } = this.props;
+    const { authForm, type = 'password' } = this.state;
+
     return (
-      <div>
-        <Input placeholder="Search..." />
-      </div>
+      <Form>
+        <Form.Input
+          inline={inline === undefined ? false : inline}
+          className={isError ? 'animated shake faster' : null}
+          label={`${label} ${
+            listTypeExtra.includes(authForm.authType) && authForm.challenge
+              ? `(${authForm.challenge}):`
+              : ':'
+          }`}
+          type={type}
+          placeholder={placeholder}
+          required
+          value={authForm.token}
+          onChange={this.handleInputChange}
+          maxLength={maxLength}
+          icon={
+            <Icon
+              name={type === 'password' ? 'eye slash' : 'eye'}
+              link
+              onClick={e => this.showHidePassword(e)}
+            />
+          }
+        />
+        {isError ? (
+          <ErrorWrapper>
+            <p>{errorMessage}</p>
+          </ErrorWrapper>
+        ) : null}
+      </Form>
     );
   }
 }
