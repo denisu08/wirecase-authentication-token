@@ -31,16 +31,13 @@ class Example extends Component {
   render() {
     return (
       <AuthenticationTokenComponent
-        json={[
-          {
-            task: 'Learn React',
-            done: true,
-          },
-          {
-            task: 'Write Book',
-            done: false,
-          },
-        ]}
+        label="Auth Token"
+        placeholder="input token here..."
+        maxLength={6}
+        value={{
+          authType: 'softToken',
+          challenge: `${Math.ceil(Math.random() * 999999)}`,
+        }}
       />
     );
   }
@@ -57,8 +54,7 @@ class Example extends Component {
 
 # What
 
-![alt pic](https://raw.githubusercontent.com/denisu08/wirecase-authentication-token/master/pic1.png)
-![alt pic](https://raw.githubusercontent.com/denisu08/wirecase-authentication-token/master/pic2.png)
+![alt pic](https://raw.githubusercontent.com/denisu08/wirecase-authentication-token/master/screenshot.png)
 
 ## License
 
