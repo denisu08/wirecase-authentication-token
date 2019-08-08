@@ -16,6 +16,7 @@ export default class AuthenticationTokenComponent extends Component {
   };
   static propTypes = {
     inline: PropTypes.bool,
+    required: PropTypes.bool,
     label: PropTypes.string,
     challengeLabel: PropTypes.string,
     placeholder: PropTypes.string,
@@ -86,12 +87,14 @@ export default class AuthenticationTokenComponent extends Component {
       listTypeExtra,
       isError,
       errorMessage,
+      required,
     } = this.props;
     const { authForm, type = 'password' } = this.state;
 
     return (
       <Form>
         <Form.Input
+          required={required === undefined ? false : required}
           inline={inline === undefined ? false : inline}
           className={isError ? 'animated shake faster' : null}
           label={`${label} ${
@@ -101,7 +104,6 @@ export default class AuthenticationTokenComponent extends Component {
           }`}
           type={type}
           placeholder={placeholder}
-          required
           value={authForm.token}
           onChange={this.handleInputChange}
           maxLength={maxLength}
