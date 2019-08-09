@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { Form, Icon } from 'semantic-ui-react';
 import * as _ from 'lodash';
 
-const ErrorWrapper = styled.div`
-  color: ${props => props.theme.errorColor};
-`;
+// const ErrorWrapper = styled.div`
+//   color: ${props => props.theme.errorColor};
+// `;
 export default class AuthenticationTokenComponent extends Component {
   static defaultProps = {
     label: 'Token',
@@ -26,6 +26,7 @@ export default class AuthenticationTokenComponent extends Component {
     onValueChange: PropTypes.func,
     isError: PropTypes.bool,
     errorMessage: PropTypes.string,
+    theme: PropTypes.any,
   };
 
   static styles = {
@@ -60,7 +61,7 @@ export default class AuthenticationTokenComponent extends Component {
     const { onValueChange, regexValidation } = this.props;
     if (value.match(regexValidation) != null) {
       const newAuthForm = {
-        authForm: Object.assign(this.state.authForm, { token: value }),
+        authForm: _.merge(this.state.authForm, { token: value }),
       };
       if (onValueChange) {
         onValueChange(newAuthForm);
@@ -88,6 +89,7 @@ export default class AuthenticationTokenComponent extends Component {
       isError,
       errorMessage,
       required,
+      theme,
     } = this.props;
     const { authForm, type = 'password' } = this.state;
 
@@ -116,9 +118,9 @@ export default class AuthenticationTokenComponent extends Component {
           }
         />
         {isError ? (
-          <ErrorWrapper>
-            <p>{errorMessage}</p>
-          </ErrorWrapper>
+          // <ErrorWrapper>
+          // </ErrorWrapper>
+          <p style={{ color: theme.errorColor }}>{errorMessage}</p>
         ) : null}
       </Form>
     );
