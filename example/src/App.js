@@ -14,6 +14,7 @@ export default class App extends Component {
         <h1>Wirecase Authentication Token Demo</h1>
         <p>Following Input using wirecase-authentication-token</p>
         <AuthenticationTokenComponent
+          isFullWidth
           required
           inline
           label="Auth Token"
@@ -23,8 +24,8 @@ export default class App extends Component {
             authType: "softToken",
             challenge: `${Math.ceil(Math.random() * 999999)}`
           }}
-          // isError
-          // errorMessage="Sample Error"
+          isError
+          errorMessage="Sample Error"
         />
       </div>
     );

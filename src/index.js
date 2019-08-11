@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import styled from 'styled-components';
+import styled from "styled-components";
 import { merge, get } from "lodash/object";
 import { Icon, Form, Label, Segment } from "semantic-ui-react";
 
-// const ErrorWrapper = styled.div`
-//   color: ${props => props.theme.errorColor};
-// `;
+const ErrorWrapper = styled.div`
+  color: ${props => (props.theme ? props.theme.errorColor : "red")};
+`;
+const MAX_WIDTH = "90%";
+
 export default class AuthenticationTokenComponent extends React.Component {
   static defaultProps = {
     label: "Token",
@@ -15,6 +17,7 @@ export default class AuthenticationTokenComponent extends React.Component {
     listTypeExtra: ["softToken", "hardToken"]
   };
   static propTypes = {
+    isFullWidth: PropTypes.bool,
     inline: PropTypes.bool,
     required: PropTypes.bool,
     label: PropTypes.string,
@@ -57,14 +60,34 @@ export default class AuthenticationTokenComponent extends React.Component {
     };
   }
 
+  prepareChange(e, valueChange) {
+    const { initial } = this.state;
+    if (initial) clearTimeout(initial);
+
+    this.setState({
+      initial: window.setTimeout(() => {
+        this.handleInputChange(e, valueChange);
+      }, 1000),
+      value: valueChange.value
+    });
+  }
+
   handleInputChange = (e, { value }) => {
-    const { onChange, regexValidation } = this.props;
+    const { initial } = this.state;
+    if (initial) clearTimeout(initial);
+
+    const { regexValidation } = this.props;
     if (value.match(regexValidation) != null) {
       const newAuthForm = merge(this.state.authForm, { token: value });
-      if (onChange) {
-        onChange(newAuthForm);
-      }
-      this.setState(newAuthForm);
+      this.setState({
+        authForm: newAuthForm,
+        initial: window.setTimeout(() => {
+          const { onChange } = this.props;
+          if (onChange) {
+            onChange(newAuthForm);
+          }
+        }, 1000)
+      });
     }
   };
 
@@ -79,6 +102,7 @@ export default class AuthenticationTokenComponent extends React.Component {
   render() {
     const {
       label,
+      isFullWidth,
       challengeLabel,
       placeholder,
       inline,
@@ -86,26 +110,31 @@ export default class AuthenticationTokenComponent extends React.Component {
       listTypeExtra,
       isError,
       errorMessage,
-      required,
-      theme
+      required
     } = this.props;
     const { authForm, type = "password" } = this.state;
 
     return (
-      <Segment compact fluid>
+      <Segment
+        compact={isFullWidth === undefined ? true : !isFullWidth}
+        fluid={isFullWidth === undefined ? false : isFullWidth}
+        className={isError ? "animated shake faster" : null}
+      >
         <Form>
           {listTypeExtra.includes(authForm.authType) && authForm.challenge ? (
             <Form.Field inline={inline === undefined ? false : inline} fluid>
               <label>{`${challengeLabel}:`}</label>
-              <Label size="big">{authForm.challenge}</Label>
+              <Label size="big" style={{ width: MAX_WIDTH }}>
+                {authForm.challenge}
+              </Label>
             </Form.Field>
           ) : (
             ""
           )}
           <Form.Input
+            style={{ width: MAX_WIDTH }}
             required={required === undefined ? false : required}
             inline={inline === undefined ? false : inline}
-            className={isError ? "animated shake faster" : null}
             label={`${label}:`}
             type={type}
             placeholder={placeholder}
@@ -121,9 +150,9 @@ export default class AuthenticationTokenComponent extends React.Component {
             }
           />
           {isError ? (
-            // <ErrorWrapper>
-            // </ErrorWrapper>
-            <p style={{ color: theme.errorColor }}>{errorMessage}</p>
+            <ErrorWrapper>
+              <p>{errorMessage}</p>
+            </ErrorWrapper>
           ) : null}
         </Form>
       </Segment>
