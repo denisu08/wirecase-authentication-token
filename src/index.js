@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 // import styled from 'styled-components';
-// import SemanticUI from "semantic-ui-react";
-// import * as _ from "lodash";
 import { merge, get } from "lodash/object";
-import { Icon, Form } from "semantic-ui-react";
+import { Icon, Form, Label, Segment } from "semantic-ui-react";
 
 // const ErrorWrapper = styled.div`
 //   color: ${props => props.theme.errorColor};
@@ -18,7 +16,7 @@ export default class AuthenticationTokenComponent extends React.Component {
   };
   static propTypes = {
     inline: PropTypes.bool,
-    // required: PropTypes.bool,
+    required: PropTypes.bool,
     label: PropTypes.string,
     challengeLabel: PropTypes.string,
     placeholder: PropTypes.string,
@@ -60,13 +58,11 @@ export default class AuthenticationTokenComponent extends React.Component {
   }
 
   handleInputChange = (e, { value }) => {
-    const { onValueChange, regexValidation } = this.props;
+    const { onChange, regexValidation } = this.props;
     if (value.match(regexValidation) != null) {
-      const newAuthForm = {
-        authForm: merge(this.state.authForm, { token: value })
-      };
-      if (onValueChange) {
-        onValueChange(newAuthForm);
+      const newAuthForm = merge(this.state.authForm, { token: value });
+      if (onChange) {
+        onChange(newAuthForm);
       }
       this.setState(newAuthForm);
     }
@@ -90,42 +86,47 @@ export default class AuthenticationTokenComponent extends React.Component {
       listTypeExtra,
       isError,
       errorMessage,
-      // required,
+      required,
       theme
     } = this.props;
     const { authForm, type = "password" } = this.state;
 
     return (
-      // <div>test</div>
-      <Form>
-        <Form.Input
-          // required={required === undefined ? false : required}
-          inline={inline === undefined ? false : inline}
-          className={isError ? "animated shake faster" : null}
-          label={`${label} ${
-            listTypeExtra.includes(authForm.authType) && authForm.challenge
-              ? ` (${challengeLabel} ${authForm.challenge}):`
-              : ":"
-          }`}
-          type={type}
-          placeholder={placeholder}
-          value={authForm.token}
-          onChange={this.handleInputChange}
-          maxLength={maxLength}
-          icon={
-            <Icon
-              name={type === "password" ? "eye slash" : "eye"}
-              link
-              onClick={e => this.showHidePassword(e)}
-            />
-          }
-        />
-        {isError ? (
-          // <ErrorWrapper>
-          // </ErrorWrapper>
-          <p style={{ color: theme.errorColor }}>{errorMessage}</p>
-        ) : null}
-      </Form>
+      <Segment compact fluid>
+        <Form>
+          {listTypeExtra.includes(authForm.authType) && authForm.challenge ? (
+            <Form.Field inline={inline === undefined ? false : inline} fluid>
+              <label>{`${challengeLabel}:`}</label>
+              <Label size="big">{authForm.challenge}</Label>
+            </Form.Field>
+          ) : (
+            ""
+          )}
+          <Form.Input
+            required={required === undefined ? false : required}
+            inline={inline === undefined ? false : inline}
+            className={isError ? "animated shake faster" : null}
+            label={`${label}:`}
+            type={type}
+            placeholder={placeholder}
+            value={authForm.token}
+            onChange={this.handleInputChange}
+            maxLength={maxLength}
+            icon={
+              <Icon
+                name={type === "password" ? "eye slash" : "eye"}
+                link
+                onClick={e => this.showHidePassword(e)}
+              />
+            }
+          />
+          {isError ? (
+            // <ErrorWrapper>
+            // </ErrorWrapper>
+            <p style={{ color: theme.errorColor }}>{errorMessage}</p>
+          ) : null}
+        </Form>
+      </Segment>
     );
   }
 }

@@ -15,6 +15,7 @@ export default class App extends Component {
         <p>Following Input using wirecase-authentication-token</p>
         <AuthenticationTokenComponent
           required
+          inline
           label="Auth Token"
           placeholder="input token here..."
           maxLength={6}
