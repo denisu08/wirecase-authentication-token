@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // import styled from 'styled-components';
-import { Form, Icon } from 'semantic-ui-react';
-import * as _ from 'lodash';
+// import SemanticUI from "semantic-ui-react";
+// import * as _ from "lodash";
+import { merge, get } from "lodash/object";
+import { Icon, Form } from "semantic-ui-react";
 
 // const ErrorWrapper = styled.div`
 //   color: ${props => props.theme.errorColor};
 // `;
-export default class AuthenticationTokenComponent extends Component {
+export default class AuthenticationTokenComponent extends React.Component {
   static defaultProps = {
-    label: 'Token',
-    challengeLabel: 'Challenge',
-    regexValidation: '^[0-9]*$',
-    listTypeExtra: ['softToken', 'hardToken'],
+    label: "Token",
+    challengeLabel: "Challenge",
+    regexValidation: "^[0-9]*$",
+    listTypeExtra: ["softToken", "hardToken"]
   };
   static propTypes = {
     inline: PropTypes.bool,
-    required: PropTypes.bool,
+    // required: PropTypes.bool,
     label: PropTypes.string,
     challengeLabel: PropTypes.string,
     placeholder: PropTypes.string,
@@ -26,34 +28,34 @@ export default class AuthenticationTokenComponent extends Component {
     onValueChange: PropTypes.func,
     isError: PropTypes.bool,
     errorMessage: PropTypes.string,
-    theme: PropTypes.any,
+    theme: PropTypes.any
   };
 
   static styles = {
     td: {
-      border: '1px solid #cccccc',
-      textAlign: 'left',
+      border: "1px solid #cccccc",
+      textAlign: "left",
       margin: 0,
-      padding: '6px 13px',
+      padding: "6px 13px"
     },
     th: {
-      border: '1px solid #cccccc',
-      textAlign: 'left',
+      border: "1px solid #cccccc",
+      textAlign: "left",
       margin: 0,
-      padding: '6px 13px',
-      fontWeight: 'bold',
-    },
+      padding: "6px 13px",
+      fontWeight: "bold"
+    }
   };
 
   constructor(props) {
     super();
     this.state = {
       authForm: {
-        authType: _.get(props, 'value.authType' || ''),
-        challenge: _.get(props, 'value.challenge' || ''),
-        token: _.get(props, 'value.token' || ''),
+        authType: get(props, "value.authType" || ""),
+        challenge: get(props, "value.challenge" || ""),
+        token: get(props, "value.token" || "")
       },
-      type: 'password',
+      type: "password"
     };
   }
 
@@ -61,7 +63,7 @@ export default class AuthenticationTokenComponent extends Component {
     const { onValueChange, regexValidation } = this.props;
     if (value.match(regexValidation) != null) {
       const newAuthForm = {
-        authForm: _.merge(this.state.authForm, { token: value }),
+        authForm: merge(this.state.authForm, { token: value })
       };
       if (onValueChange) {
         onValueChange(newAuthForm);
@@ -74,7 +76,7 @@ export default class AuthenticationTokenComponent extends Component {
     e.preventDefault();
     e.stopPropagation();
     return this.setState({
-      type: this.state.type === 'input' ? 'password' : 'input',
+      type: this.state.type === "input" ? "password" : "input"
     });
   }
 
@@ -88,21 +90,22 @@ export default class AuthenticationTokenComponent extends Component {
       listTypeExtra,
       isError,
       errorMessage,
-      required,
-      theme,
+      // required,
+      theme
     } = this.props;
-    const { authForm, type = 'password' } = this.state;
+    const { authForm, type = "password" } = this.state;
 
     return (
+      // <div>test</div>
       <Form>
         <Form.Input
-          required={required === undefined ? false : required}
+          // required={required === undefined ? false : required}
           inline={inline === undefined ? false : inline}
-          className={isError ? 'animated shake faster' : null}
+          className={isError ? "animated shake faster" : null}
           label={`${label} ${
             listTypeExtra.includes(authForm.authType) && authForm.challenge
               ? ` (${challengeLabel} ${authForm.challenge}):`
-              : ':'
+              : ":"
           }`}
           type={type}
           placeholder={placeholder}
@@ -111,7 +114,7 @@ export default class AuthenticationTokenComponent extends Component {
           maxLength={maxLength}
           icon={
             <Icon
-              name={type === 'password' ? 'eye slash' : 'eye'}
+              name={type === "password" ? "eye slash" : "eye"}
               link
               onClick={e => this.showHidePassword(e)}
             />

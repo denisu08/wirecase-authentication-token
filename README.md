@@ -23,24 +23,24 @@ npm install --save wirecase-authentication-token
 ## Usage
 
 ```jsx
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import AuthenticationTokenComponent from 'wirecase-authentication-token';
+import AuthenticationTokenComponent from "wirecase-authentication-token";
 
 class Example extends Component {
-  render() {
-    return (
-      <AuthenticationTokenComponent
-        label="Auth Token"
-        placeholder="input token here..."
-        maxLength={6}
-        value={{
-          authType: 'softToken',
-          challenge: `${Math.ceil(Math.random() * 999999)}`,
-        }}
-      />
-    );
-  }
+    render() {
+        return (
+            <AuthenticationTokenComponent
+                label="Auth Token"
+                placeholder="input token here..."
+                maxLength={6}
+                value={{
+                    authType: "softToken",
+                    challenge: `${Math.ceil(Math.random() * 999999)}`
+                }}
+            />
+        );
+    }
 }
 ```
 

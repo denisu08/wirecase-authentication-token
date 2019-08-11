@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import AuthenticationTokenComponent from 'wirecase-authentication-token';
-import 'semantic-ui-css/semantic.min.css';
-import './index.css';
+import AuthenticationTokenComponent from "wirecase-authentication-token";
+import "semantic-ui-css/semantic.min.css";
+import "./index.css";
 
 export default class App extends Component {
   static propTypes = {};
@@ -19,8 +19,8 @@ export default class App extends Component {
           placeholder="input token here..."
           maxLength={6}
           value={{
-            authType: 'softToken',
-            challenge: `${Math.ceil(Math.random() * 999999)}`,
+            authType: "softToken",
+            challenge: `${Math.ceil(Math.random() * 999999)}`
           }}
           // isError
           // errorMessage="Sample Error"

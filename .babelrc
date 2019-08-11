@@ -1,12 +1,7 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ],
-    "stage-0",
-    "react"
+  "stage": 0,
+  "blacklist": [
+    "es6.tailCall",
+    "spec.functionName"
   ]
 }
