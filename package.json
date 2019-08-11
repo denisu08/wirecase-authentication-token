@@ -1,6 +1,6 @@
 {
   "name": "wirecase-authentication-token",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A lightweight responsive pie chart component for React using only SVG",
   "repository": {
     "type": "git",
@@ -28,7 +28,6 @@
     "prop-types": "^15.5.4",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0",
-    "styled-components": "3.3.2",
     "semantic-ui-react": "0.85",
     "lodash": "4.17.10"
   },

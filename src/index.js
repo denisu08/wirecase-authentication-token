@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { merge, get } from "lodash/object";
 import { Icon, Form, Label, Segment } from "semantic-ui-react";
 
-const ErrorWrapper = styled.div`
-  color: ${props => (props.theme ? props.theme.errorColor : "red")};
-`;
+// const ErrorWrapper = styled.div`
+//   color: ${props => (props.theme ? props.theme.errorColor : "red")};
+// `;
 const MAX_WIDTH = "90%";
 
 export default class AuthenticationTokenComponent extends React.Component {
@@ -110,7 +110,8 @@ export default class AuthenticationTokenComponent extends React.Component {
       listTypeExtra,
       isError,
       errorMessage,
-      required
+      required,
+      theme
     } = this.props;
     const { authForm, type = "password" } = this.state;
 
@@ -150,9 +151,11 @@ export default class AuthenticationTokenComponent extends React.Component {
             }
           />
           {isError ? (
-            <ErrorWrapper>
-              <p>{errorMessage}</p>
-            </ErrorWrapper>
+            // <ErrorWrapper>
+            // </ErrorWrapper>
+            <p style={{ color: theme ? theme.errorColor : "red" }}>
+              {errorMessage}
+            </p>
           ) : null}
         </Form>
       </Segment>
